@@ -1,5 +1,5 @@
 import React from "react";
-import { Twitter, Facebook, Instagram } from "lucide-react";
+import { Twitter, Facebook, Instagram, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -29,11 +29,18 @@ const Footer = () => {
               <a href="https://www.instagram.com/seergiiogg__" target="_blank" rel="noopener noreferrer" className="hover:text-pink-500">
                 <Instagram className="w-5 h-5" />
               </a>
+              <a
+                href="https://www.linkedin.com/in/sergio-gallardo-grima-41243b359/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-700"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>
       </div>
-
       <div className="text-center bg-black text-white text-sm py-2">
         © 2025 Sergio.
       </div>
