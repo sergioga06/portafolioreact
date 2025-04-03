@@ -3,7 +3,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
   "files": [],
   "references": [
@@ -11,4 +13,5 @@
     { "path": "./tsconfig.node.json" }
   ]
 }
+
 
