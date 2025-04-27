@@ -10,7 +10,7 @@ const ProjectsList: React.FC = () => {
   const projects: Project[] = [
     {
       title: "Proyecto 1",
-      youtubeUrl: "https://www.youtube.com/embed/ID_DEL_VIDEO_1",
+      youtubeUrl: "https://www.youtube.com/embed/En6yKcG9Ocg",
     },
     {
       title: "Proyecto 2",
