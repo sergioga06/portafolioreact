@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const opciones = [
   { name: 'Inicio', href: '/', current: true },
   { name: 'Contacto', href: '/contacto', current: false },
+  { name: 'Proyecto', href: '/proyectos', current: false },
   { name: 'Descargar CV', href: '/cv.pdf', download: true },
 ];
 
