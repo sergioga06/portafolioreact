@@ -14,7 +14,7 @@ const ProjectsList: React.FC = () => {
     },
     {
       title: "Proyecto 2",
-      youtubeUrl: "https://www.youtube.com/embed/ID_DEL_VIDEO_2",
+      youtubeUrl: "https://www.youtube.com/embed/uKaBv9b2IM8",
     },
   ];
 
