@@ -2,13 +2,23 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: portfolio-ingress
-  namespace: proyectoportfolio
+  namespace: proyectoportfolio # El namespace que creamos
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: public
   rules:
-    - host: www.sergiogallardogrima.com
+    - host: sergiogallardogrima.com # Regla para el dominio raíz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio-service # Debe coincidir con tu Service
+                port:
+                  number: 80
+    - host: www.sergiogallardogrima.com # Nueva regla para el subdominio www
       http:
         paths:
           - path: /
