@@ -1,6 +1,7 @@
+// src/components/www/site/Navbar.tsx
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Link, useLocation } from 'react-router-dom'; // Importamos useLocation
+import { Link, useLocation } from 'react-router-dom';
 
 const opciones = [
   { name: 'Inicio', href: '/' },
@@ -14,7 +15,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
-  const location = useLocation(); // Obtenemos la ruta actual (ej: "/", "/contacto")
+  const location = useLocation();
 
   return (
     <Disclosure as="nav" className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
@@ -34,7 +35,6 @@ export default function Navbar() {
 
             <div className="hidden sm:ml-6 sm:flex sm:space-x-4">
               {opciones.map((item) => {
-                // Comparamos si la ruta actual coincide con el href de la opción
                 const isCurrent = location.pathname === item.href;
 
                 return item.download ? (
@@ -52,8 +52,8 @@ export default function Navbar() {
                     to={item.href}
                     className={classNames(
                       isCurrent 
-                        ? 'bg-primary/10 text-primary' // Estilo activo
-                        : 'text-foreground/70 hover:bg-accent hover:text-foreground', // Estilo inactivo
+                        ? 'bg-primary/10 text-primary' 
+                        : 'text-foreground/70 hover:bg-accent hover:text-foreground',
                       'px-4 py-2 rounded-full text-sm font-medium transition-all'
                     )}
                   >
@@ -70,18 +70,24 @@ export default function Navbar() {
         <div className="space-y-1 px-2 pt-2 pb-3 border-t border-border/40">
           {opciones.map((item) => {
             const isCurrent = location.pathname === item.href;
+            const activeClass = isCurrent ? 'bg-primary/10 text-primary' : 'text-foreground/70 hover:bg-accent';
 
-            return (
+            return item.download ? (
               <DisclosureButton
                 key={item.name}
-                as={item.download ? 'a' : Link}
-                to={item.download ? undefined : item.href}
-                href={item.download ? item.href : undefined}
-                download={item.download}
-                className={classNames(
-                  isCurrent ? 'bg-primary/10 text-primary' : 'text-foreground/70 hover:bg-accent',
-                  'block rounded-lg px-3 py-2 text-base font-medium'
-                )}
+                as="a"
+                href={item.href}
+                download
+                className={classNames(activeClass, 'block rounded-lg px-3 py-2 text-base font-medium')}
+              >
+                {item.name}
+              </DisclosureButton>
+            ) : (
+              <DisclosureButton
+                key={item.name}
+                as={Link}
+                to={item.href}
+                className={classNames(activeClass, 'block rounded-lg px-3 py-2 text-base font-medium')}
               >
                 {item.name}
               </DisclosureButton>

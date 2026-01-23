@@ -1,0 +1,12 @@
+services:
+  portfolio-web:
+    build:
+      context: ../
+      dockerfile: ./deploy/Dockerfile
+    image: portfolio_react:latest
+    container_name: ct_portfolio
+    restart: always
+    volumes: 
+      - ./logs:/var/log/nginx
+    ports:
+      - "${PORT:-8080}:80"
