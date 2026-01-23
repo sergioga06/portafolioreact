@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: public
   rules:
-    - host: sergiogallardogrima.com
+    - host: www.sergiogallardogrima.com
       http:
         paths:
           - path: /
