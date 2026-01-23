@@ -7,15 +7,14 @@ const ContactForm = () => {
 
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!form.current) return;
 
     emailjs
       .sendForm(
-        "service_661xpdi",      // <- Reemplazá con tu Service ID
-        "template_eeiyed9",     // <- Reemplazá con tu Template ID
+        "service_661xpdi",
+        "template_eeiyed9",
         form.current,
-        "t9vTtJjBUaSFDHD-i"       // <- Reemplazá con tu Public Key
+        "t9vTtJjBUaSFDHD-i"
       )
       .then(
         () => {
@@ -30,44 +29,50 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-bold mb-6">Contáctame</h2>
+    <div className="bg-card/50 backdrop-blur-md p-8 rounded-2xl border border-border/50 shadow-xl">
+      <h2 className="text-2xl font-bold mb-8 text-foreground">
+        Hablemos de tu <span className="text-primary">proyecto</span>
+      </h2>
 
-      <form ref={form} onSubmit={sendEmail} className="space-y-4">
-        <div>
-          <label htmlFor="user_email" className="block font-semibold mb-1">
-            Correo Electrónico:
+      <form ref={form} onSubmit={sendEmail} className="space-y-6">
+        <div className="space-y-2">
+          <label htmlFor="user_email" className="block text-sm font-semibold text-foreground/70 ml-1">
+            Correo Electrónico
           </label>
           <input
             type="email"
             name="user_email"
             required
-            placeholder="tucorreo@gmail.com"
-            className="w-full border rounded px-3 py-2"
+            placeholder="tucorreo@ejemplo.com"
+            className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
           />
         </div>
 
-        <div>
-          <label htmlFor="message" className="block font-semibold mb-1">
-            Mensaje:
+        <div className="space-y-2">
+          <label htmlFor="message" className="block text-sm font-semibold text-foreground/70 ml-1">
+            Mensaje
           </label>
           <textarea
             name="message"
-            rows={4}
+            rows={5}
             required
-            placeholder="Escribe tu mensaje aquí..."
-            className="w-full border rounded px-3 py-2"
+            placeholder="¿En qué puedo ayudarte?"
+            className="w-full bg-background/50 border border-border rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all resize-none"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-neutral-900 text-white py-2 rounded hover:bg-neutral-700 transition"
+          className="w-full bg-primary text-primary-foreground font-bold py-4 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
         >
-          Enviar
+          Enviar mensaje
         </button>
 
-        {status && <p className="mt-2 text-sm text-center text-green-600">{status}</p>}
+        {status && (
+          <p className={`mt-4 text-sm text-center font-medium ${status.includes('error') ? 'text-destructive' : 'text-primary'}`}>
+            {status}
+          </p>
+        )}
       </form>
     </div>
   );

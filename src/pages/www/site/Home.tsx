@@ -7,21 +7,24 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 50);
+    // Aumentamos ligeramente el tiempo para apreciar la transición suave
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 
   return loading ? (
-    <div className="flex justify-center items-center min-h-screen">
-      <Spinner />
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <Spinner className="text-primary w-10 h-10" />
     </div>
   ) : (
-    <main className="container mx-auto p-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <PerfilLateral />
-        <ResumenContenido />
-      </div>
-    </main>
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
+      <main className="container mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <PerfilLateral />
+          <ResumenContenido />
+        </div>
+      </main>
+    </div>
   );
 };
 

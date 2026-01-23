@@ -7,18 +7,18 @@ const Contacto = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 50);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     loading ? (
-      <div className="flex justify-center items-center min-h-screen">
-        <Spinner />
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <Spinner className="text-primary" />
       </div>
     ) : (
-      <main className="container mx-auto py-8 px-4">
-        <div className="grid md:grid-cols-2 gap-8">
+      <main className="container mx-auto py-12 px-4 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
           <ContactForm />
           <MapaUbicacion />
         </div>
