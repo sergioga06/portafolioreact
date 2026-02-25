@@ -23,6 +23,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.2",
     "form-data": "^4.0.5",
+    "helm": "^0.2.1",
     "init": "^0.1.2",
     "js-yaml": "^4.1.1",
     "lucide-react": "^0.484.0",

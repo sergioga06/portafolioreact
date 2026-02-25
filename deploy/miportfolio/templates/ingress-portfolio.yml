@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: portfolio-ingress
+  namespace: miportfolio
+  annotations:
+    # Le decimos que use el ClusterIssuer que acabamos de crear
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # Forzar redirección de HTTP a HTTPS
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: public
+  tls:
+  - hosts:
+    - sergiogallardogrima.com
+    - www.sergiogallardogrima.com
+    # Nombre del secreto donde se guardará el certificado generado
+    secretName: portfolio-tls-secret 
+  rules:
+    - host: sergiogallardogrima.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio-service
+                port:
+                  number: 80
+    - host: www.sergiogallardogrima.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: portfolio-service
+                port:
+                  number: 80
