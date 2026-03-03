@@ -1,8 +1,8 @@
 replicaCount: 3
 image:
-  repository: sergiogg06/portafolioreact
+  repository: sergiogg06/portafolioreact  # Cambiado para que coincida con tu Docker Hub
+  pullPolicy: IfNotPresent
   tag: "latest"
-  pullPolicy: Always
 service:
   type: NodePort
   port: 80
