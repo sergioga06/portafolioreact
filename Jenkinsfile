@@ -34,8 +34,8 @@ spec:
         }
 
         stage('Deploy to Kubernetes') {
-    steps {
-        sh "kubectl rollout restart deployment portfolio-deployment -n proyectoportfolio || echo 'Primer despliegue'"
+            steps {
+                sh "kubectl rollout restart deployment portfolio-deployment -n proyectoportfolio || echo 'Primer despliegue'"
     }
 }
     }
