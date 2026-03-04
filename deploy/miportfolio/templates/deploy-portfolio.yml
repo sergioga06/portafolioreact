@@ -2,16 +2,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: portfolio-deployment
+  labels:
+    app: portfolio
 spec:
   replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: portfolio
   template:
+    metadata:
+      labels:
+        app: portfolio
     spec:
       containers:
         - name: portfolio
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-    spec:
-      containers:
-        - name: portfolio
-          image: sergiogg06/portafolioreact:latest # Asegúrate de haber subido la imagen a Docker Hub
           ports:
             - containerPort: 80
