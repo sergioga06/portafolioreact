@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  namespace: jenkins # El namespace donde vive tu Jenkins
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod" # Usamos tu emisor ya configurado
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx # La clase que activamos en MicroK8s
+  tls:
+  - hosts:
+    - jenkins.sergiogallardogrima.com
+    secretName: jenkins-tls-secret
+  rules:
+    - host: jenkins.sergiogallardogrima.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mi-jenkins # Nombre de tu servicio de Jenkins
+                port:
+                  number: 8080 # Puerto de la interfaz web
