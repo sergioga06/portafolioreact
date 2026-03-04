@@ -35,8 +35,8 @@ spec:
 
         stage('Deploy to Kubernetes') {
             steps {
-                // Intentamos reiniciar el deployment. Si no existe aún, fallará pero seguiremos.
-                sh "microk8s kubectl rollout restart deployment portafolioreact-deployment || echo 'Primer despliegue'"
+                // Cambiamos el nombre para que coincida con lo que despliega Argo
+                sh "kubectl rollout restart deployment portfolio-deployment -n proyectoportfolio || echo 'Despliegue inicial'"
             }
         }
     }
