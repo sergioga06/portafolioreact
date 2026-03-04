@@ -24,16 +24,12 @@ spec:
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/sergiogg06/portafolioreact.git'
-            }
-        }
-
+        // Borramos el stage de Checkout manual porque Jenkins lo hace solo al inicio
+        
         stage('Install & Build') {
             steps {
                 container('node') {
-                    // Aquí es donde la RAM física y la Swap trabajarán juntas
+                    // Aquí la Swap de 2GB es vital
                     sh 'npm install'
                     sh 'npm run build'
                 }
@@ -54,7 +50,7 @@ spec:
 
         stage('Deploy to K8s') {
             steps {
-                // Actualizamos el despliegue en MicroK8s
+                // Esto actualizará tu App en el clúster automáticamente
                 sh "microk8s kubectl rollout restart deployment portafolioreact-deployment || echo 'Primer despliegue'"
             }
         }
