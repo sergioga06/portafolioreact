@@ -1,49 +1,61 @@
 pipeline {
     agent {
         kubernetes {
-            yaml '''
+            yaml """
 apiVersion: v1
 kind: Pod
 spec:
   containers:
-  - name: kaniko
-    image: gcr.io/kaniko-project/executor:debug
-    command:
-    - /busybox/cat
-    tty: true
-    volumeMounts:
-      - name: docker-config
-        mountPath: /kaniko/.docker
-  volumes:
-    - name: docker-config
-      secret:
-        secretName: dockerhub-secret
-'''
+  - name: node
+    image: node:20-alpine
+    command: ["sleep"]
+    args: ["99d"]
+  - name: docker
+    image: docker:24.0.5-dind
+    securityContext:
+      privileged: true
+"""
         }
     }
 
     environment {
-        IMAGE = "sergiogg06/portafolioreact"
+        DOCKER_IMAGE = "sergiogg06/portafolioreact"
+        DOCKER_TAG = "latest"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/sergiogg06/portafolioreact.git'
             }
         }
 
-        stage('Build & Push Image') {
+        stage('Install & Build') {
             steps {
-                container('kaniko') {
-                    sh """
-                        /kaniko/executor --context ${WORKSPACE} \
-                            --dockerfile deploy/Dockerfile \
-                            --destination ${IMAGE}:${BUILD_NUMBER} \
-                            --destination ${IMAGE}:latest \
-                            --snapshot-mode=redo --single-snapshot
-                    """
+                container('node') {
+                    // Aquí es donde la RAM física y la Swap trabajarán juntas
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                container('docker') {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DUSER', passwordVariable: 'DPASS')]) {
+                        sh "echo \$DPASS | docker login -u \$DUSER --password-stdin"
+                        sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                        sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to K8s') {
+            steps {
+                // Actualizamos el despliegue en MicroK8s
+                sh "microk8s kubectl rollout restart deployment portafolioreact-deployment || echo 'Primer despliegue'"
             }
         }
     }
