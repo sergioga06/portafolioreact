@@ -34,10 +34,9 @@ spec:
         }
 
         stage('Deploy to Kubernetes') {
-            steps {
-                // Cambiamos el nombre para que coincida con lo que despliega Argo
-                sh "kubectl rollout restart deployment portfolio-deployment -n proyectoportfolio || echo 'Despliegue inicial'"
-            }
-        }
+    steps {
+        sh "kubectl rollout restart deployment portfolio-deployment -n proyectoportfolio || echo 'Primer despliegue'"
+    }
+}
     }
 }
