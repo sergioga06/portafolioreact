@@ -1,11 +1,14 @@
-# Usamos una imagen ligera de Nginx para servir el contenido estático
+# ETAPA 1: Construcción (Node)
+FROM node:20-alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# ETAPA 2: Servidor (Nginx)
 FROM nginx:stable-alpine
-
-# Copiamos el resultado de la compilación (la carpeta dist) al directorio de Nginx
-COPY dist /usr/share/nginx/html
-
-# Exponemos el puerto 80
+# Copiamos desde la etapa 'build' directamente
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
-
-# Arrancamos Nginx
 CMD ["nginx", "-g", "daemon off;"]
