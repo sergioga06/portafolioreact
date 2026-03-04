@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/tu-usuario/portafolioreact.git' # Tu repo real
+    repoURL: 'https://github.com/sergioga06/portafolioreact.git' # Tu repo real
     targetRevision: HEAD
     path: deploy/miportfolio # Ruta donde está el Chart.yaml
   destination:
